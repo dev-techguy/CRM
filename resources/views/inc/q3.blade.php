@@ -55,14 +55,6 @@
 
         <hr>
         <div class="form-group">
-            <button wire:target="previousQuestion" wire:click="previousQuestion" wire:loading.attr="disabled" class="btn btn-outline-danger pull-left"
-                    type="button">
-                <div wire:loading>
-                    <i class="fa fa-spinner fa-spin"></i>
-                </div>
-                Previous
-            </button>
-
             <button wire:target="questionThree" wire:loading.attr="disabled" class="btn btn-outline-primary pull-right" type="submit">
                 <div wire:loading>
                     <i class="fa fa-spinner fa-spin"></i>
@@ -71,4 +63,11 @@
             </button>
         </div>
     </form>
+    <button wire:target="previousQuestion" wire:click="previousQuestion" wire:loading.attr="disabled" class="btn btn-outline-danger pull-left"
+            type="button">
+        <div wire:loading>
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+        Previous
+    </button>
 </div>
