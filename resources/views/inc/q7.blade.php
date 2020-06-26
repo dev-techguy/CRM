@@ -1,6 +1,6 @@
 <div class="col-md-6">
     @include('inc.alert')
-    <form role="form" wire:submit.prevent="questionSix" method="post">
+    <form role="form" wire:submit.prevent="questionSeven" method="post">
         <div class="form-check">
             <hr>
             <strong>Q{{ $script->id }}.</strong> {{ $script->question }}
@@ -19,17 +19,6 @@
                 @enderror
             </div>
         @endforeach
-
-        @if($answer === 'others')
-            <div class="form-group">
-                <textarea wire:model.lazy="text" id="text" cols="30" rows="10" class="form-control border-dark @error('answer') is-invalid @enderror">{{ old('text') }}</textarea>
-                @error('text')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                @enderror
-            </div>
-        @endif
 
         <hr>
         <div class="form-group">

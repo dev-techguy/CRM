@@ -18,6 +18,7 @@ class Crm extends Component
     public $title;
     public $script;
     public $disposition;
+    public $text;
     public $dateTime;
     public $getStarted = false;
     public $questionCount = 0;
@@ -227,10 +228,35 @@ class Crm extends Component
 
     /**
      * process q6
+     * @return void
      */
     public function questionSix()
     {
+        $this->commonValidation();
+        if (($this->answer === 'drives') || ($this->answer === 'cloud')) {
+            $this->questionCount = $this->script->next_question['drives'];
+        } elseif ($this->answer === 'others') {
+            $this->validate([
+                'text' => ['string', 'required']
+            ]);
+            $this->questionCount = $this->script->next_question['others'];
+        }
 
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+
+    }
+
+    /**
+     * process q7
+     * @return void
+     */
+    public function questionSeven()
+    {
+        $this->commonValidation();
+        $this->questionCount = $this->script->next_question['agree'];
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
     }
 
     public function render()
