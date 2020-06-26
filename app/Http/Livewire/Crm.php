@@ -259,6 +259,30 @@ class Crm extends Component
         $this->answer = null;
     }
 
+    /**
+     * process q8
+     * @return void
+     */
+    public function questionEight()
+    {
+        $this->commonValidation();
+        $this->questionCount = $this->script->next_question['agree'];
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+    }
+
+    /**
+     * process q9
+     * @return void
+     */
+    public function questionNine()
+    {
+        $this->commonValidation();
+        $this->questionCount = $this->script->next_question['agree'];
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+    }
+
     public function render()
     {
         return view('livewire.crm', [

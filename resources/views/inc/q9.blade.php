@@ -1,6 +1,6 @@
 <div class="col-md-6">
     @include('inc.alert')
-    <form role="form" wire:submit.prevent="questionSeven" method="post">
+    <form role="form" wire:submit.prevent="questionNine" method="post">
         <div class="form-check">
             <hr>
             <strong>Q{{ $script->id }}.</strong> {{ $script->question }}
@@ -22,7 +22,8 @@
 
         <hr>
         <div class="form-group">
-            <button wire:target="previousQuestion" wire:click="previousQuestion" wire:loading.attr="disabled" class="btn btn-outline-danger pull-left"
+            <button wire:target="previousQuestion" wire:click="previousQuestion" wire:loading.attr="disabled"
+                    class="btn btn-outline-danger pull-left"
                     type="button">
                 <div wire:loading>
                     <i class="fa fa-spinner fa-spin"></i>
@@ -30,7 +31,8 @@
                 Previous
             </button>
 
-            <button wire:target="questionSeven" wire:loading.attr="disabled" class="btn btn-outline-primary pull-right" type="submit">
+            <button wire:target="questionNine" wire:loading.attr="disabled" class="btn btn-outline-primary pull-right"
+                    type="submit">
                 <div wire:loading>
                     <i class="fa fa-spinner fa-spin"></i>
                 </div>

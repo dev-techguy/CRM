@@ -21,6 +21,22 @@
                 @include('inc.q5')
             @elseif($questionCount == 6)
                 @include('inc.q6')
+            @elseif($questionCount == 7)
+                @include('inc.q7')
+            @elseif($questionCount == 8)
+                @include('inc.q8')
+            @elseif($questionCount == 9)
+                @include('inc.q9')
+            @elseif($questionCount == 10)
+                @include('inc.q10')
+            @elseif($questionCount == 11)
+                @include('inc.q11')
+            @elseif($questionCount == 12)
+                @include('inc.q12')
+            @elseif($questionCount == 13)
+                @include('inc.q13')
+            @elseif($questionCount == 14)
+                @include('inc.q14')
             @endif
         @else
             <div class="col-md-6 border-left-0 text-primary">

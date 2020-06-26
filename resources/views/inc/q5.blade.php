@@ -48,7 +48,7 @@
 
         <hr>
         <div class="form-group">
-            <button wire:click="previousQuestion" wire:loading.attr="disabled" class="btn btn-outline-danger pull-left"
+            <button wire:target="previousQuestion" wire:click="previousQuestion" wire:loading.attr="disabled" class="btn btn-outline-danger pull-left"
                     type="button">
                 <div wire:loading>
                     <i class="fa fa-spinner fa-spin"></i>
@@ -56,7 +56,7 @@
                 Previous
             </button>
 
-            <button wire:loading.attr="disabled" class="btn btn-outline-primary pull-right" type="submit">
+            <button wire:target="questionFive" wire:loading.attr="disabled" class="btn btn-outline-primary pull-right" type="submit">
                 <div wire:loading>
                     <i class="fa fa-spinner fa-spin"></i>
                 </div>
