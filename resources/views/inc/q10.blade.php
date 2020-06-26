@@ -17,6 +17,19 @@
             @enderror
         </div>
 
+        @if($answer === 'yes')
+            <div class="form-group">
+                <label class="form-check-label" for="dateTime">Set Date And Time</label>
+                <input class="form-control  @error('dateTime') is-invalid @enderror" type="datetime-local"
+                       wire:model.lazy="dateTime" id="dateTime">
+                @error('dateTime')
+                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                @enderror
+            </div>
+        @endif
+
         <div class="form-group">
             <input class="form-check-input  @error('answer') is-invalid @enderror" type="radio" wire:model.lazy="answer"
                    id="no" value="no">

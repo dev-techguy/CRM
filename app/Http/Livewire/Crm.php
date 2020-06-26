@@ -233,7 +233,7 @@ class Crm extends Component
     public function questionSix()
     {
         $this->commonValidation();
-        if (($this->answer === 'drives') || ($this->answer === 'cloud')) {
+        if (($this->answer === 'physical drives') || ($this->answer === 'cloud')) {
             $this->questionCount = $this->script->next_question['drives'];
         } elseif ($this->answer === 'others') {
             $this->validate([
@@ -281,6 +281,34 @@ class Crm extends Component
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
         $this->answer = null;
+    }
+
+    /**
+     * process q10
+     * @return void
+     * @throws Exception
+     */
+    public function questionTen()
+    {
+        $this->commonValidation();
+        if ($this->answer === 'yes') {
+            $this->validate([
+                'dateTime' => ['nullable', 'date', 'after_or_equal:now'],
+            ]);
+
+            $this->questionCount = $this->script->next_question['yes'];
+            $this->script = Script::query()->findOrFail($this->questionCount);
+            $this->answer = null;
+        } else {
+            $this->validate([
+                'disposition' => ['required', 'string']
+            ]);
+
+            $this->questionCount = 0;
+            $this->getStarted = false;
+            cache()->forget('name_and_title' . request()->getClientIp());
+            session()->flash('success', 'Thank you for contacting us.');
+        }
     }
 
     public function render()

@@ -151,7 +151,7 @@ location gives you a piece of mind that your business info is safe?',
             ],
             // TODO Q9
             [
-                'question' => 'You also agree that that our service is very affordable, right?',
+                'question' => 'You also agree that our service is very affordable, right?',
                 'answers' => json_encode([
                     'agree' => 'Agree',
                     'disagree' => 'Disagree',
@@ -173,7 +173,7 @@ executives will come over to discuss the solution in detail.',
                 ]),
                 'next_question' => json_encode([
                     'yes' => 11,
-                    'no' => 11,
+                    'no' => 'Get dispositions',
                 ]),
                 'dispositions' => json_encode([
                     '1' => 'Call Back.',
