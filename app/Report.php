@@ -13,12 +13,9 @@ class Report extends Model
     protected $fillable = [
         'script_id',
         'client',
-        'phone_number',
-        'email',
         'answer',
         'disposition',
-        'appointment_date',
-        'callback_date',
+        'text',
         'is_complete',
     ];
 

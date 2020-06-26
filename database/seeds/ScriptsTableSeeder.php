@@ -229,7 +229,9 @@ clarification on the information I have given you?',
 
         // store sample questions and answers for the script
         foreach ($scripts as $script) {
-            DB::table((new Script())->getTable())->insert($script);
+            DB::transaction(function () use ($script) {
+                DB::table((new Script())->getTable())->insert($script);
+            });
         }
     }
 }

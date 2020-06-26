@@ -17,7 +17,6 @@ class Crm extends Component
     public $name;
     public $phone_number;
     public $email;
-    public $title;
     public $script;
     public $disposition;
     public $text;
@@ -64,8 +63,7 @@ class Crm extends Component
     {
         $this->getStarted = true;
         $this->questionCount++;
-        $this->title = $this->cacheNameAndTitle()[0];
-        $this->name = $this->cacheNameAndTitle()[1];
+        $this->name = $this->cacheNameAndTitle();
         $this->script = Script::query()->findOrFail($this->questionCount);
     }
 
@@ -80,9 +78,7 @@ class Crm extends Component
         if (cache()->has('name_and_title' . request()->getClientIp()))
             return cache()->get('name_and_title' . request()->getClientIp());
         return cache()->remember('name_and_title' . request()->getClientIp(), now()->addHour(), function () {
-            $name = Factory::create()->firstName;
-            $title = Factory::create()->title;
-            return [$title, $name];
+            return Factory::create()->title . ' ' . Factory::create()->firstName;
         });
     }
 
