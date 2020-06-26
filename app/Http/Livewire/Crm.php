@@ -207,16 +207,30 @@ class Crm extends Component
             $this->script = Script::query()->findOrFail($this->questionCount);
             $this->answer = null;
         } elseif (($this->answer === 'bad') || ($this->answer === 'poor')) {
-            if ($this->disposition == 6){
+
+            $this->validate([
+                'disposition' => ['required', 'string']
+            ]);
+
+            if ($this->disposition === '1') {
                 $this->questionCount = $this->script->next_question['excellent'];
                 $this->script = Script::query()->findOrFail($this->questionCount);
                 $this->answer = null;
+            } else {
+                $this->questionCount = 0;
+                $this->getStarted = false;
+                cache()->forget('name_and_title' . request()->getClientIp());
+                session()->flash('success', 'Thank you for contacting us.');
             }
-            $this->questionCount = 0;
-            $this->getStarted = false;
-            cache()->forget('name_and_title' . request()->getClientIp());
-            session()->flash('success', 'Thank you for contacting us.');
         }
+    }
+
+    /**
+     * process q6
+     */
+    public function questionSix()
+    {
+
     }
 
     public function render()

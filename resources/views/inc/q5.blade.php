@@ -26,7 +26,7 @@
             <div class="form-group">
                 <input class="form-check-input  @error('disposition') is-invalid @enderror" type="radio" wire:model.lazy="disposition"
                        id="1" value="1">
-                <label class="form-check-label" for="no">YES</label>
+                <label class="form-check-label" for="no">{{ $script->dispositions['1'] }}</label>
                 @error('disposition')
                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
