@@ -13,8 +13,7 @@ class ScriptsTableSeeder extends Seeder
      */
     public function run()
     {
-        // store sample questions and answers for the script
-        DB::table((new Script())->getTable())->insert([
+        $scripts = [
             // TODO Q1
             [
                 'question' => 'My Name is Cynthia Calling you from ABC, could I
@@ -26,7 +25,9 @@ speak to',
                 'next_question' => json_encode([
                     'yes' => 3,
                     'no' => 2,
-                ])
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q2
             [
@@ -42,9 +43,10 @@ speak to',
                 'dispositions' => json_encode([
                     '1' => 'Number doesn’t belong to the customer.',
                     '2' => 'Not Interested.',
-                ])
-            ],
-            // TODO Q3
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],// TODO Q3
             [
                 'question' => 'Its about ABC and the benefits your company can acquire from us working together. Which is
 offering a solution that will significantly reduce your IT infrastructure costs while ensuring reliability and
@@ -60,7 +62,9 @@ enhanced security through the services we offer. Are you interested?',
                 'dispositions' => json_encode([
                     '1' => 'Call Back.',
                     '2' => 'Not Interested.',
-                ])
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q4
             [
@@ -72,7 +76,9 @@ enhanced security through the services we offer. Are you interested?',
                 'next_question' => json_encode([
                     'yes' => 5,
                     'no' => 5,
-                ])
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q5
             [
@@ -97,7 +103,9 @@ enhanced security through the services we offer. Are you interested?',
                 ]),
                 'dispositions' => json_encode([
                     '1' => 'Not Interested.',
-                ])
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q6
             [
@@ -108,6 +116,8 @@ you back up your business data?  What systems do you currently use?',
                     'cloud' => 'Cloud',
                     'others' => 'others',
                 ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q7
             [
@@ -117,6 +127,8 @@ important for your business & needs back up?',
                     'agree' => 'Agree',
                     'disagree' => 'Disagree',
                 ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q8
             [
@@ -126,6 +138,8 @@ location gives you a piece of mind that your business info is safe?',
                     'agree' => 'Agree',
                     'disagree' => 'Disagree',
                 ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q9
             [
@@ -134,6 +148,8 @@ location gives you a piece of mind that your business info is safe?',
                     'agree' => 'Agree',
                     'disagree' => 'Disagree',
                 ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q10
             [
@@ -150,13 +166,17 @@ executives will come over to discuss the solution in detail.',
                 'dispositions' => json_encode([
                     '1' => 'Call Back.',
                     '2' => 'Not Interested.',
-                ])
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q11
             [
                 'question' => 'Kindly assist us with your email address to sent an appointment invite whereby one of our
 representatives will visit you and take you through the process of registration / set up and get you ready
 for the services.',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q12
             [
@@ -166,6 +186,8 @@ clarification on the information I have given you?',
                     'yes' => 'YES',//Capture Detail
                     'no' => 'NO',//End Call
                 ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q13
             [
@@ -174,11 +196,20 @@ clarification on the information I have given you?',
                     'yes' => 'YES',//Capture email id & phone number and send auto email and text sms both to this email once completing the call
                     'no' => 'NO',//End Call
                 ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             // TODO Q14
             [
                 'question' => 'Calling Ending',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
-        ]);
+        ];
+
+        // store sample questions and answers for the script
+        foreach ($scripts as $script) {
+            DB::table((new Script())->getTable())->insert($script);
+        }
     }
 }
