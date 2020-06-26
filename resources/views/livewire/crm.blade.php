@@ -45,7 +45,7 @@
                 <p class="text-center">CRM - <b><i>Customer Relationship Management</i></b></p>
                 <br>
                 <center>
-                    <button wire:loading.attr="disabled" wire:click="startSession"
+                    <button wire:target="startSession" wire:loading.attr="disabled" wire:click="startSession"
                             class="btn btn-outline-success btn-lg">
                         <div wire:loading>
                             <i class="fa fa-spinner fa-spin"></i>

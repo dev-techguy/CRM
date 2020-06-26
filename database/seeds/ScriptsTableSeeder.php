@@ -198,6 +198,10 @@ clarification on the information I have given you?',
                     'yes' => 'YES',//Capture Detail
                     'no' => 'NO',//End Call
                 ]),
+                'next_question' => json_encode([
+                    'yes' => 13,
+                    'no' => 13,
+                ]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -207,6 +211,10 @@ clarification on the information I have given you?',
                 'answers' => json_encode([
                     'yes' => 'YES',//Capture email id & phone number and send auto email and text sms both to this email once completing the call
                     'no' => 'NO',//End Call
+                ]),
+                'next_question' => json_encode([
+                    'yes' => 14,
+                    'no' => 14,
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),

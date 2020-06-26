@@ -15,6 +15,8 @@ class Crm extends Component
     // this are used globally for the entire page
     public $answer;
     public $name;
+    public $phone_number;
+    public $email;
     public $title;
     public $script;
     public $disposition;
@@ -47,6 +49,8 @@ class Crm extends Component
     {
         $this->validateOnly($field, [
             'dateTime' => ['nullable', 'date', 'after_or_equal:now'],
+            'email' => ['nullable', 'email', 'string', 'max:255'],
+            'phone_number' => ['nullable', 'numeric', 'digits_between:10,10'],
         ]);
     }
 
@@ -309,6 +313,74 @@ class Crm extends Component
             cache()->forget('name_and_title' . request()->getClientIp());
             session()->flash('success', 'Thank you for contacting us.');
         }
+    }
+
+    /**
+     * process q11
+     * @return void
+     */
+    public function questionEleven()
+    {
+        $this->validate([
+            'email' => ['string', 'required', 'email', 'max:255']
+        ]);
+
+        $this->questionCount++;
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+    }
+
+    /**
+     * process q12
+     * @return void
+     */
+    public function questionTwelve()
+    {
+        $this->commonValidation();
+
+        if ($this->answer === 'yes') {
+            $this->validate([
+                'text' => ['string', 'required']
+            ]);
+        }
+
+        $this->questionCount = $this->script->next_question['yes'];
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+
+    }
+
+    /**
+     * process q13
+     * @return void
+     */
+    public function questionThirteen()
+    {
+        $this->commonValidation();
+
+        if ($this->answer === 'yes') {
+            $this->validate([
+                'phone_number' => ['required', 'numeric', 'digits_between:10,10'],
+            ]);
+
+            //send email and sms
+        }
+
+        $this->questionCount = $this->script->next_question['yes'];
+        $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+        session()->flash('success', 'Have a good day. Good bye.');
+    }
+
+    /**
+     * process q14
+     * @throws Exception
+     */
+    public function questionFourteen()
+    {
+        $this->questionCount = 0;
+        $this->getStarted = false;
+        cache()->forget('name_and_title' . request()->getClientIp());
     }
 
     public function render()
