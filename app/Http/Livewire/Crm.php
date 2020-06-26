@@ -301,7 +301,7 @@ class Crm extends Component
         $this->commonValidation();
         if ($this->answer === 'yes') {
             $this->validate([
-                'dateTime' => ['nullable', 'date', 'after_or_equal:now'],
+                'dateTime' => ['required', 'date', 'after_or_equal:now'],
             ]);
 
             $this->questionCount = $this->script->next_question['yes'];

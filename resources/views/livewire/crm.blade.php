@@ -6,6 +6,12 @@
             @else
                 <img src="{{ asset('images/crm.gif') }}" alt="IMG">
             @endif
+
+            <center>
+                <div wire:poll>
+                    <h5>{{ date('F d, Y H:i:s a', strtotime(now())) }}</h5>
+                </div>
+            </center>
         </div>
 
         @if($getStarted)
@@ -44,6 +50,7 @@
                 <h3 class="text-center">Welcome to <strong>ABC</strong></h3>
                 <p class="text-center">CRM - <b><i>Customer Relationship Management</i></b></p>
                 <br>
+                <hr>
                 <center>
                     <button wire:target="startSession" wire:loading.attr="disabled" wire:click="startSession"
                             class="btn btn-outline-success btn-lg">
@@ -53,6 +60,7 @@
                         START CONVERSATION
                     </button>
                 </center>
+                <hr>
             </div>
         @endif
     </div>
