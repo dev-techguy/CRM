@@ -10,7 +10,7 @@
     <title>ABC - {{ config('app.name', 'ABC') }}</title>
 
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="{{ asset('images/crm.gif') }}"/>
+    <link rel="icon" type="image/png" href="{{ asset('images/abc.png') }}"/>
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->

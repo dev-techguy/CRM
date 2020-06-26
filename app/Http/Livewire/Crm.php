@@ -449,7 +449,7 @@ class Crm extends Component
                 $this->name,
                 $caller->email,
                 'Hi, there is an Escalation, Kindly look in to it asap.'
-            )))->delay(10);
+            )))->delay(5);
         }
 
         $this->questionCount = $this->script->next_question['yes'];
