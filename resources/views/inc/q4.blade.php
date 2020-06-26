@@ -1,12 +1,9 @@
 <div class="col-md-6">
     @include('inc.alert')
-    <form role="form" wire:submit.prevent="questionOne" method="post">
-				<span class="contact1-form-title">
-					Hello , {{ \App\Http\Controllers\SystemController::pass_greetings_to_user() }}
-				</span>
+    <form role="form" wire:submit.prevent="questionThree" method="post">
         <div class="form-check">
             <hr>
-            <strong>Q{{ $script->id }}.</strong> {{ $script->question }} {{ $title }} {{ $name }}
+            <strong>Q{{ $script->id }}.</strong> Thank you {{ $title }} {{ $name }} {{ $script->question }}
         </div>
 
         <div class="form-group">
@@ -31,8 +28,22 @@
             @enderror
         </div>
 
+        <div class="form-group">
+            <p>ABC is a backup service provider that offers you affordable & secure backup solutions. It also offers
+                leased server services so customers don’t have to invest in physical servers in their offices which are
+                managed by ABC, 24/ 7</p>
+        </div>
+
         <hr>
         <div class="form-group">
+            <button wire:click="previousQuestion" wire:loading.attr="disabled" class="btn btn-outline-danger pull-left"
+                    type="button">
+                <div wire:loading>
+                    <i class="fa fa-spinner fa-spin"></i>
+                </div>
+                Previous
+            </button>
+
             <button wire:loading.attr="disabled" class="btn btn-outline-primary pull-right" type="submit">
                 <div wire:loading>
                     <i class="fa fa-spinner fa-spin"></i>

@@ -1,9 +1,9 @@
 <div class="col-md-6">
     @include('inc.alert')
-    <form role="form" wire:submit.prevent="questionTwo" method="post">
+    <form role="form" wire:submit.prevent="questionThree" method="post">
         <div class="form-check">
             <hr>
-            <strong>Q{{ $script->id }}.</strong> Can I talk to {{ $title }} {{ $name }} {{ $script->question }}
+            <strong>Q{{ $script->id }}.</strong> {{ $script->question }}
         </div>
 
         <div class="form-group">
@@ -16,19 +16,6 @@
                                     </span>
             @enderror
         </div>
-
-        @if($answer === 'yes')
-            <div class="form-group">
-                <label class="form-check-label" for="dateTime">Set Date And Time</label>
-                <input class="form-control  @error('dateTime') is-invalid @enderror" type="datetime-local"
-                       wire:model.lazy="dateTime" id="dateTime">
-                @error('dateTime')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                @enderror
-            </div>
-        @endif
 
         <div class="form-group">
             <input class="form-check-input  @error('answer') is-invalid @enderror" type="radio" wire:model.lazy="answer"
@@ -63,6 +50,7 @@
                 @enderror
             </div>
         @endif
+
 
         <hr>
         <div class="form-group">

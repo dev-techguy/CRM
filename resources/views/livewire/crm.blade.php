@@ -13,6 +13,10 @@
                 @include('inc.q1')
             @elseif($questionCount == 2)
                 @include('inc.q2')
+            @elseif($questionCount == 3)
+                @include('inc.q3')
+            @elseif($questionCount == 4)
+                @include('inc.q4')
             @endif
         @else
             <div class="col-md-6 border-left-0 text-primary">

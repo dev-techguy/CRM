@@ -157,6 +157,42 @@ class Crm extends Component
 
     }
 
+    /**
+     * process q3
+     * @return void
+     * @throws Exception
+     */
+    public function questionThree()
+    {
+        $this->commonValidation();
+
+        if ($this->answer === 'yes') {
+            $this->questionCount = $this->script->next_question['yes'];
+            $this->script = Script::query()->findOrFail($this->questionCount);
+            $this->answer = null;
+        } elseif ($this->answer === 'no') {
+            $this->questionCount = 0;
+            $this->getStarted = false;
+            cache()->forget('name_and_title' . request()->getClientIp());
+            session()->flash('success', 'Thank you for contacting us.');
+        }
+    }
+
+    /**
+     * process q4
+     * @return void
+     */
+    public function questionFour()
+    {
+        $this->commonValidation();
+
+        if (($this->answer === 'yes') || ($this->answer === 'no')) {
+            $this->questionCount = $this->script->next_question['yes'];
+            $this->script = Script::query()->findOrFail($this->questionCount);
+            $this->answer = null;
+        }
+    }
+
     public function render()
     {
         return view('livewire.crm', [
