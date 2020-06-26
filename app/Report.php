@@ -20,14 +20,6 @@ class Report extends Model
     ];
 
     /**
-     * set cast
-     */
-    protected $casts = [
-        'answer' => 'array',
-        'disposition' => 'array',
-    ];
-
-    /**
      * get script
      * @return BelongsTo
      */

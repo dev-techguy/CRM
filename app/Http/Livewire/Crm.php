@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\CallBack;
 use App\Http\Controllers\SystemController;
 use App\Script;
 use Exception;
@@ -126,7 +125,7 @@ class Crm extends Component
             $this->questionCount = $this->script->next_question['no'];
         }
         // set report
-        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+        SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
         // proceed
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -142,28 +141,28 @@ class Crm extends Component
     {
         $this->commonValidation();
         $this->validate([
-            'dateTime' => ['required', 'date', 'after_or_equal:now'],
+            'dateTime' => ['nullable', 'date', 'after_or_equal:now'],
         ]);
 
         if ($this->answer === 'yes') {
 
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             // store Call back date
-            $callBack = SystemController::setDates(null, $this->dateTime);
+            SystemController::setDates(null, $this->dateTime);
 
             $this->questionCount = 0;
             $this->getStarted = false;
             cache()->forget('name_and_title' . request()->getClientIp());
-            session()->flash('success', 'We have set you a call back date. Which is on ' . date('F d, Y H:i a', strtotime($callBack->callback_date)));
+            session()->flash('success', 'We have set you a call back date. Which is on ' . date('F d, Y H:i a', strtotime($this->dateTime)));
         } elseif ($this->answer === 'no') {
             $this->validate([
                 'disposition' => ['required', 'string']
             ]);
 
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer], $this->script->dispositions[$this->disposition]);
 
             $this->questionCount = 0;
             $this->getStarted = false;
@@ -184,14 +183,18 @@ class Crm extends Component
 
         if ($this->answer === 'yes') {
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             $this->questionCount = $this->script->next_question['yes'];
             $this->script = Script::query()->findOrFail($this->questionCount);
             $this->answer = null;
         } elseif ($this->answer === 'no') {
+            $this->validate([
+                'disposition' => ['required', 'string']
+            ]);
+
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer], $this->script->dispositions[$this->disposition]);
 
             $this->questionCount = 0;
             $this->getStarted = false;
@@ -211,7 +214,7 @@ class Crm extends Component
 
         if (($this->answer === 'yes') || ($this->answer === 'no')) {
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             $this->questionCount = $this->script->next_question['yes'];
             $this->script = Script::query()->findOrFail($this->questionCount);
@@ -230,7 +233,7 @@ class Crm extends Component
 
         if (($this->answer === 'good') || ($this->answer === 'excellent')) {
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             $this->questionCount = $this->script->next_question['excellent'];
             $this->script = Script::query()->findOrFail($this->questionCount);
@@ -243,7 +246,7 @@ class Crm extends Component
 
             if ($this->disposition === '1') {
                 // set report
-                SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer], $this->disposition, $this->script->disposition[$this->disposition]);
+                SystemController::generateReport($this->script->id, $this->script->answers[$this->answer], $this->script->dispositions[$this->disposition]);
 
                 $this->questionCount = $this->script->next_question['excellent'];
                 $this->script = Script::query()->findOrFail($this->questionCount);
@@ -266,8 +269,11 @@ class Crm extends Component
     {
         $this->commonValidation();
         if (($this->answer === 'physical drives') || ($this->answer === 'cloud')) {
+            if ($this->answer === 'physical drives') {
+                $this->answer = 'drives';
+            }
             // set the report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             $this->questionCount = $this->script->next_question['drives'];
         } elseif ($this->answer === 'others') {
@@ -293,7 +299,7 @@ class Crm extends Component
     {
         $this->commonValidation();
         // set the report
-        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+        SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -310,7 +316,7 @@ class Crm extends Component
         $this->commonValidation();
 
         // set the report
-        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+        SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -327,7 +333,7 @@ class Crm extends Component
         $this->commonValidation();
 
         // set the report
-        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+        SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -351,7 +357,7 @@ class Crm extends Component
             SystemController::setDates($this->dateTime, null);
 
             // set the report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             $this->questionCount = $this->script->next_question['yes'];
             $this->script = Script::query()->findOrFail($this->questionCount);
@@ -362,7 +368,7 @@ class Crm extends Component
             ]);
 
             // set report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer], $this->disposition, $this->script->disposition[$this->disposition]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer], $this->script->dispositions[$this->disposition]);
 
             $this->questionCount = 0;
             $this->getStarted = false;
@@ -409,7 +415,7 @@ class Crm extends Component
         }
 
         // set the report
-        SystemController::generateReport($this->script->id, $this->answer, $this->text);
+        SystemController::generateReport($this->script->id, $this->text);
 
         $this->questionCount = $this->script->next_question['yes'];
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -435,7 +441,7 @@ class Crm extends Component
             SystemController::setCallDetails(null, $this->phone_number);
 
             // set the report
-            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+            SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             //send email and sms
         }

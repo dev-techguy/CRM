@@ -17,8 +17,8 @@ class CreateReportsTable extends Migration
             $table->id();
             $table->unsignedInteger('script_id');
             $table->string('client');
-            $table->json('answer');
-            $table->json('disposition');
+            $table->string('answer')->nullable();
+            $table->string('disposition')->nullable();
             $table->longText('text')->nullable();
             $table->boolean('is_complete')->default(false);
             $table->timestamps();

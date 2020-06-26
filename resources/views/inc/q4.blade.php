@@ -1,6 +1,6 @@
 <div class="col-md-6">
     @include('inc.alert')
-    <form role="form" wire:submit.prevent="questionThree" method="post">
+    <form role="form" wire:submit.prevent="questionFour" method="post">
         <div class="form-check">
             <hr>
             <strong>Q{{ $script->id }}.</strong> Thank you  {{ $name }} {{ $script->question }}
