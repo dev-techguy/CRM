@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Http\Controllers\SystemController;
+use App\Jobs\MailJob;
 use App\Script;
 use Exception;
 use Faker\Factory;
@@ -438,12 +439,17 @@ class Crm extends Component
             ]);
 
             // set the caller details
-            SystemController::setCallDetails(null, $this->phone_number);
+            $caller = SystemController::setCallDetails(null, $this->phone_number);
 
             // set the report
             SystemController::generateReport($this->script->id, $this->script->answers[$this->answer]);
 
             //send email and sms
+            dispatch((new MailJob(
+                $this->name,
+                $caller->email,
+                'Hi, there is an Escalation, Kindly look in to it asap.'
+            )))->delay(10);
         }
 
         $this->questionCount = $this->script->next_question['yes'];
