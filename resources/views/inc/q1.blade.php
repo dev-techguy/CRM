@@ -1,34 +1,33 @@
-<form class="contact1-form validate-form">
+<form role="form" wire:submit.prevent="questionOne" method="post">
 				<span class="contact1-form-title">
-					Get in touch
+					Hello , {{ \App\Http\Controllers\SystemController::pass_greetings_to_user() }}
 				</span>
-
-    <div class="wrap-input1 validate-input" data-validate="Name is required">
-        <input class="input1" type="text" name="name" placeholder="Name">
-        <span class="shadow-input1"></span>
+    <div class="form-check">
+        <hr>
+        {{ $script->question }} {{ $title }} {{ $name }}
     </div>
 
-    <div class="wrap-input1 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-        <input class="input1" type="text" name="email" placeholder="Email">
-        <span class="shadow-input1"></span>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" wire:model.lazy="answer" id="yes" value="yes">
+        <label class="form-check-label" for="yes">
+            {{ $script->answers['yes'] }}
+        </label>
     </div>
 
-    <div class="wrap-input1 validate-input" data-validate="Subject is required">
-        <input class="input1" type="text" name="subject" placeholder="Subject">
-        <span class="shadow-input1"></span>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" wire:model.lazy="answer" id="no" value="no">
+        <label class="form-check-label" for="no">
+            {{ $script->answers['no'] }}
+        </label>
     </div>
 
-    <div class="wrap-input1 validate-input" data-validate="Message is required">
-        <textarea class="input1" name="message" placeholder="Message"></textarea>
-        <span class="shadow-input1"></span>
-    </div>
-
-    <div class="container-contact1-form-btn">
-        <button class="contact1-form-btn">
-						<span>
-							Send Email
-							<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-						</span>
+    <hr>
+    <div class="form-check">
+        <button wire:loading.attr="disabled" class="btn btn-outline-primary pull-right" type="submit">
+            <div wire:loading>
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            Next
         </button>
     </div>
 </form>
