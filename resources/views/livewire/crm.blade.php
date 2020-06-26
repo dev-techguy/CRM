@@ -1,42 +1,32 @@
 <div class="contact1">
     <div class="container-contact1">
         <div class="contact1-pic js-tilt" data-tilt>
-            <img src="{{ asset('images/crm.gif') }}" alt="IMG">
+            @if($getStarted)
+                <img src="{{ asset('images/server.gif') }}" alt="IMG">
+            @else
+                <img src="{{ asset('images/crm.gif') }}" alt="IMG">
+            @endif
         </div>
 
-        <form class="contact1-form validate-form">
-				<span class="contact1-form-title">
-					Get in touch
-				</span>
-
-            <div class="wrap-input1 validate-input" data-validate="Name is required">
-                <input class="input1" type="text" name="name" placeholder="Name">
-                <span class="shadow-input1"></span>
+        @if($getStarted)
+            @if($questionCount == 1)
+                @include('inc.q1')
+            @endif
+        @else
+            <div class="col-md-6 border-left-0 text-primary">
+                <h3 class="text-center">Welcome to <strong>ABC</strong></h3>
+                <p class="text-center">CRM - <b><i>Customer Relationship Management</i></b></p>
+                <br>
+                <center>
+                    <button wire:loading.attr="disabled" wire:click="startSession"
+                            class="btn btn-outline-success btn-lg">
+                        <div wire:loading>
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </div>
+                        START CONVERSATION
+                    </button>
+                </center>
             </div>
-
-            <div class="wrap-input1 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                <input class="input1" type="text" name="email" placeholder="Email">
-                <span class="shadow-input1"></span>
-            </div>
-
-            <div class="wrap-input1 validate-input" data-validate="Subject is required">
-                <input class="input1" type="text" name="subject" placeholder="Subject">
-                <span class="shadow-input1"></span>
-            </div>
-
-            <div class="wrap-input1 validate-input" data-validate="Message is required">
-                <textarea class="input1" name="message" placeholder="Message"></textarea>
-                <span class="shadow-input1"></span>
-            </div>
-
-            <div class="container-contact1-form-btn">
-                <button class="contact1-form-btn">
-						<span>
-							Send Email
-							<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-						</span>
-                </button>
-            </div>
-        </form>
+        @endif
     </div>
 </div>
