@@ -11,9 +11,12 @@
         @if($getStarted)
             @if($questionCount == 1)
                 @include('inc.q1')
+            @elseif($questionCount == 2)
+                @include('inc.q2')
             @endif
         @else
             <div class="col-md-6 border-left-0 text-primary">
+                @include('inc.alert')
                 <h3 class="text-center">Welcome to <strong>ABC</strong></h3>
                 <p class="text-center">CRM - <b><i>Customer Relationship Management</i></b></p>
                 <br>

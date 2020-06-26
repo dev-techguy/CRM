@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\CallBack;
 use App\Script;
 use Exception;
 use Faker\Factory;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Psr\SimpleCache\InvalidArgumentException;
 
@@ -15,6 +17,8 @@ class Crm extends Component
     public $name;
     public $title;
     public $script;
+    public $disposition;
+    public $dateTime;
     public $getStarted = false;
     public $questionCount = 0;
 
@@ -30,6 +34,19 @@ class Crm extends Component
         // flush everything when the page is reloaded
         if (cache()->has('name_and_title' . request()->getClientIp()))
             cache()->forget('name_and_title' . request()->getClientIp());
+    }
+
+    /**
+     * updated function
+     * validates in real time
+     * @param $field
+     * @throws ValidationException
+     */
+    public function updated($field)
+    {
+        $this->validateOnly($field, [
+            'dateTime' => ['nullable', 'date', 'after_or_equal:now'],
+        ]);
     }
 
     /**
@@ -65,17 +82,79 @@ class Crm extends Component
     }
 
     /**
+     * this function make it able
+     * for one to get back to the
+     * previous quiz
+     * @return void
+     */
+    public function previousQuestion()
+    {
+        $this->questionCount -= 1;
+        $this->script = Script::query()->findOrFail($this->questionCount);
+    }
+
+    /**
+     * common validation
+     */
+    public function commonValidation()
+    {
+        $this->validate([
+            'answer' => ['required', 'string']
+        ]);
+
+        if (isset($this->answer)) {
+            $this->resetErrorBag('answer');
+        } else {
+            $this->addError('answer', 'Please select an option.');
+        }
+    }
+
+    /**
      * process q1
      * @return void
      */
     public function questionOne()
     {
+        $this->commonValidation();
+
         if ($this->answer === 'yes') {
             $this->questionCount = $this->script->next_question['yes'];
         } else {
             $this->questionCount = $this->script->next_question['no'];
         }
         $this->script = Script::query()->findOrFail($this->questionCount);
+        $this->answer = null;
+    }
+
+    /**
+     * process q2
+     * @return void
+     * @throws Exception
+     */
+    public function questionTwo()
+    {
+        $this->commonValidation();
+        $this->validate([
+            'dateTime' => ['nullable', 'date', 'after_or_equal:now'],
+        ]);
+
+        if ($this->answer === 'yes') {
+            // store Call back date
+            $callBack = CallBack::query()->create([
+                'next_call_date' => $this->dateTime
+            ]);
+
+            $this->questionCount = 0;
+            $this->getStarted = false;
+            cache()->forget('name_and_title' . request()->getClientIp());
+            session()->flash('success', 'We have set you a call back date. Which is on ' . date('F d, Y H:i a', strtotime($callBack->next_call_date)));
+        } elseif ($this->answer === 'no') {
+            $this->questionCount = 0;
+            $this->getStarted = false;
+            cache()->forget('name_and_title' . request()->getClientIp());
+            session()->flash('success', 'Thank you for contacting us.');
+        }
+
     }
 
     public function render()
