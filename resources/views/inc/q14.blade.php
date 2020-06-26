@@ -5,7 +5,7 @@
 				</span>
 
         <div class="form-check">
-            <p>Well {{ $title }} {{ $name }}, thank you for your time, it's been a pleasure talking to you.
+            <p>Well {{ $name }}, thank you for your time, it's been a pleasure talking to you.
                 If you have any further clarifications , feel free to contact our website <a href="{{ url('/') }}">www.abc.co</a> or phone number 020
                 – 5230028.</p>
         </div>

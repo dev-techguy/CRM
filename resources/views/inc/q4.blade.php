@@ -3,7 +3,7 @@
     <form role="form" wire:submit.prevent="questionThree" method="post">
         <div class="form-check">
             <hr>
-            <strong>Q{{ $script->id }}.</strong> Thank you {{ $title }} {{ $name }} {{ $script->question }}
+            <strong>Q{{ $script->id }}.</strong> Thank you  {{ $name }} {{ $script->question }}
         </div>
 
         <div class="form-group">

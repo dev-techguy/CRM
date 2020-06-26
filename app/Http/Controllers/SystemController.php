@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Script;
+use App\Report;
 use App\SetDate;
 use App\User;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\StreamHandler;
@@ -85,11 +87,12 @@ class SystemController extends Controller
      * @param string|null $answer_value
      * @param string|null $disposition_type
      * @param null $disposition_value
+     * @return Model|Builder|object|null
      * @throws Exception
      */
     public static function generateReport(int $script_id, string $answer_type = null, string $answer_value = null, string $disposition_type = null, $disposition_value = null)
     {
-        $report = DB::table((new Script())->getTable())
+        $report = DB::table((new Report())->getTable())
             ->where('script_id', $script_id)
             ->where('client', cache()->get('name_and_title' . request()->getClientIp()))
             ->first();
@@ -100,11 +103,13 @@ class SystemController extends Controller
                     'answer->value' => isset($answer_value) ? $answer_value : $report->answer->value,
                     'disposition->type' => isset($disposition_type) ? $disposition_type : $report->disposition->type,
                     'disposition->value' => isset($disposition_value) ? $disposition_value : $report->disposition->value,
+                    'is_complete' => true
                 ]);
             }, 5);
         } else {
-            DB::transaction(function () use ($answer_type, $answer_value, $disposition_type, $disposition_value) {
-                DB::table((new Script())->getTable())->insert([
+            DB::transaction(function () use ($script_id, $answer_type, $answer_value, $disposition_type, $disposition_value) {
+                DB::table((new Report())->getTable())->insert([
+                    'script_id' => $script_id,
                     'client' => cache()->get('name_and_title' . request()->getClientIp()),
                     'answer' => json_encode([
                         'type' => $answer_type,
@@ -114,15 +119,21 @@ class SystemController extends Controller
                         'type' => $disposition_type,
                         'value' => $disposition_value
                     ]),
+                    'is_complete' => true,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
             }, 5);
         }
+
+        return $report;
     }
 
     /**
      * set date for call back here
      * @param null $appointment_date
      * @param null $callback_date
+     * @return \Illuminate\Database\Eloquent\Builder|Model|object|null
      * @throws Exception
      */
     public static function setDates($appointment_date = null, $callback_date = null)
@@ -143,12 +154,15 @@ class SystemController extends Controller
                 'callback_date' => $callback_date,
             ]);
         }
+
+        return $setDate;
     }
 
     /**
      * set caller details
      * @param string|null $email
      * @param string|null $phone_number
+     * @return \Illuminate\Database\Eloquent\Builder|Model|object|null
      * @throws Exception
      */
     public static function setCallDetails(string $email = null, string $phone_number = null)
@@ -171,5 +185,7 @@ class SystemController extends Controller
                 'password' => bcrypt($phone_number),
             ]);
         }
+
+        return $user;
     }
 }

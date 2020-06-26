@@ -6,7 +6,7 @@
 				</span>
         <div class="form-check">
             <hr>
-            <strong>Q{{ $script->id }}.</strong> {{ $script->question }} {{ $title }} {{ $name }}
+            <strong>Q{{ $script->id }}.</strong> {{ $script->question }} {{ $name }}
         </div>
 
         <div class="form-group">

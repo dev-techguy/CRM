@@ -3,7 +3,7 @@
     <form role="form" wire:submit.prevent="questionTwo" method="post">
         <div class="form-check">
             <hr>
-            <strong>Q{{ $script->id }}.</strong> Can I talk to {{ $title }} {{ $name }} {{ $script->question }}
+            <strong>Q{{ $script->id }}.</strong> Can I talk to {{ $name }} {{ $script->question }}
         </div>
 
         <div class="form-group">

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\CallBack;
+use App\Http\Controllers\SystemController;
 use App\Script;
 use Exception;
 use Faker\Factory;
@@ -113,6 +114,7 @@ class Crm extends Component
     /**
      * process q1
      * @return void
+     * @throws Exception
      */
     public function questionOne()
     {
@@ -123,6 +125,10 @@ class Crm extends Component
         } else {
             $this->questionCount = $this->script->next_question['no'];
         }
+        // set report
+        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
+        // proceed
         $this->script = Script::query()->findOrFail($this->questionCount);
         $this->answer = null;
     }
@@ -140,19 +146,24 @@ class Crm extends Component
         ]);
 
         if ($this->answer === 'yes') {
+
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             // store Call back date
-            $callBack = CallBack::query()->create([
-                'next_call_date' => $this->dateTime
-            ]);
+            $callBack = SystemController::setDates(null, $this->dateTime);
 
             $this->questionCount = 0;
             $this->getStarted = false;
             cache()->forget('name_and_title' . request()->getClientIp());
-            session()->flash('success', 'We have set you a call back date. Which is on ' . date('F d, Y H:i a', strtotime($callBack->next_call_date)));
+            session()->flash('success', 'We have set you a call back date. Which is on ' . date('F d, Y H:i a', strtotime($callBack->callback_date)));
         } elseif ($this->answer === 'no') {
             $this->validate([
                 'disposition' => ['required', 'string']
             ]);
+
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
 
             $this->questionCount = 0;
             $this->getStarted = false;
@@ -172,10 +183,16 @@ class Crm extends Component
         $this->commonValidation();
 
         if ($this->answer === 'yes') {
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             $this->questionCount = $this->script->next_question['yes'];
             $this->script = Script::query()->findOrFail($this->questionCount);
             $this->answer = null;
         } elseif ($this->answer === 'no') {
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             $this->questionCount = 0;
             $this->getStarted = false;
             cache()->forget('name_and_title' . request()->getClientIp());
@@ -186,12 +203,16 @@ class Crm extends Component
     /**
      * process q4
      * @return void
+     * @throws Exception
      */
     public function questionFour()
     {
         $this->commonValidation();
 
         if (($this->answer === 'yes') || ($this->answer === 'no')) {
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             $this->questionCount = $this->script->next_question['yes'];
             $this->script = Script::query()->findOrFail($this->questionCount);
             $this->answer = null;
@@ -208,6 +229,9 @@ class Crm extends Component
         $this->commonValidation();
 
         if (($this->answer === 'good') || ($this->answer === 'excellent')) {
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             $this->questionCount = $this->script->next_question['excellent'];
             $this->script = Script::query()->findOrFail($this->questionCount);
             $this->answer = null;
@@ -218,6 +242,9 @@ class Crm extends Component
             ]);
 
             if ($this->disposition === '1') {
+                // set report
+                SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer], $this->disposition, $this->script->disposition[$this->disposition]);
+
                 $this->questionCount = $this->script->next_question['excellent'];
                 $this->script = Script::query()->findOrFail($this->questionCount);
                 $this->answer = null;
@@ -233,17 +260,23 @@ class Crm extends Component
     /**
      * process q6
      * @return void
+     * @throws Exception
      */
     public function questionSix()
     {
         $this->commonValidation();
         if (($this->answer === 'physical drives') || ($this->answer === 'cloud')) {
+            // set the report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             $this->questionCount = $this->script->next_question['drives'];
         } elseif ($this->answer === 'others') {
             $this->validate([
                 'text' => ['string', 'required']
             ]);
             $this->questionCount = $this->script->next_question['others'];
+
+            SystemController::generateReport($this->script->id, $this->answer, $this->text);
         }
 
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -254,10 +287,14 @@ class Crm extends Component
     /**
      * process q7
      * @return void
+     * @throws Exception
      */
     public function questionSeven()
     {
         $this->commonValidation();
+        // set the report
+        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
         $this->answer = null;
@@ -266,10 +303,15 @@ class Crm extends Component
     /**
      * process q8
      * @return void
+     * @throws Exception
      */
     public function questionEight()
     {
         $this->commonValidation();
+
+        // set the report
+        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
         $this->answer = null;
@@ -278,10 +320,15 @@ class Crm extends Component
     /**
      * process q9
      * @return void
+     * @throws Exception
      */
     public function questionNine()
     {
         $this->commonValidation();
+
+        // set the report
+        SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
         $this->questionCount = $this->script->next_question['agree'];
         $this->script = Script::query()->findOrFail($this->questionCount);
         $this->answer = null;
@@ -300,6 +347,12 @@ class Crm extends Component
                 'dateTime' => ['required', 'date', 'after_or_equal:now'],
             ]);
 
+            // set appointment date
+            SystemController::setDates($this->dateTime, null);
+
+            // set the report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
+
             $this->questionCount = $this->script->next_question['yes'];
             $this->script = Script::query()->findOrFail($this->questionCount);
             $this->answer = null;
@@ -307,6 +360,9 @@ class Crm extends Component
             $this->validate([
                 'disposition' => ['required', 'string']
             ]);
+
+            // set report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer], $this->disposition, $this->script->disposition[$this->disposition]);
 
             $this->questionCount = 0;
             $this->getStarted = false;
@@ -318,12 +374,19 @@ class Crm extends Component
     /**
      * process q11
      * @return void
+     * @throws Exception
      */
     public function questionEleven()
     {
         $this->validate([
             'email' => ['string', 'required', 'email', 'max:255']
         ]);
+
+        // set the caller details
+        SystemController::setCallDetails($this->email);
+
+        // set the report
+        SystemController::generateReport($this->script->id);
 
         $this->questionCount++;
         $this->script = Script::query()->findOrFail($this->questionCount);
@@ -333,6 +396,7 @@ class Crm extends Component
     /**
      * process q12
      * @return void
+     * @throws Exception
      */
     public function questionTwelve()
     {
@@ -344,6 +408,9 @@ class Crm extends Component
             ]);
         }
 
+        // set the report
+        SystemController::generateReport($this->script->id, $this->answer, $this->text);
+
         $this->questionCount = $this->script->next_question['yes'];
         $this->script = Script::query()->findOrFail($this->questionCount);
         $this->answer = null;
@@ -353,6 +420,7 @@ class Crm extends Component
     /**
      * process q13
      * @return void
+     * @throws Exception
      */
     public function questionThirteen()
     {
@@ -362,6 +430,12 @@ class Crm extends Component
             $this->validate([
                 'phone_number' => ['required', 'numeric', 'digits_between:10,10'],
             ]);
+
+            // set the caller details
+            SystemController::setCallDetails(null, $this->phone_number);
+
+            // set the report
+            SystemController::generateReport($this->script->id, $this->answer, $this->script->answers[$this->answer]);
 
             //send email and sms
         }
@@ -378,6 +452,9 @@ class Crm extends Component
      */
     public function questionFourteen()
     {
+        // set the report
+        SystemController::generateReport($this->script->id);
+
         $this->questionCount = 0;
         $this->getStarted = false;
         cache()->forget('name_and_title' . request()->getClientIp());
