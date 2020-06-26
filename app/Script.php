@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Script extends Model
 {
@@ -24,4 +25,13 @@ class Script extends Model
         'next_question' => 'array',
         'dispositions' => 'array',
     ];
+
+    /**
+     * get report
+     * @return HasMany
+     */
+    public function report()
+    {
+        return $this->hasMany(Report::class);
+    }
 }
