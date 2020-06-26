@@ -154,6 +154,10 @@ class Crm extends Component
             cache()->forget('name_and_title' . request()->getClientIp());
             session()->flash('success', 'We have set you a call back date. Which is on ' . date('F d, Y H:i a', strtotime($callBack->next_call_date)));
         } elseif ($this->answer === 'no') {
+            $this->validate([
+                'disposition' => ['required', 'string']
+            ]);
+
             $this->questionCount = 0;
             $this->getStarted = false;
             cache()->forget('name_and_title' . request()->getClientIp());
