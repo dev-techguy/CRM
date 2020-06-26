@@ -92,17 +92,12 @@ enhanced security through the services we offer. Are you interested?',
                 'next_question' => json_encode([
                     'excellent' => 6,
                     'good' => 6,
-                    'bad' => json_encode([
-                        'yes' => 6,
-                        'no' => 'Get dispositions'
-                    ]),
-                    'poor' => json_encode([
-                        'yes' => 6,
-                        'no' => 'Get dispositions'
-                    ]),
+                    'bad' => 'Get dispositions',
+                    'poor' => 'Get dispositions',
                 ]),
                 'dispositions' => json_encode([
-                    '1' => 'Not Interested.',
+                    '1' => 6,
+                    '2' => 'Not Interested.',
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),

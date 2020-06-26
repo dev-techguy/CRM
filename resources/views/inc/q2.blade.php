@@ -42,6 +42,7 @@
         </div>
 
         @if($answer === 'no')
+            <hr>
             <div class="form-group">
                 <input class="form-check-input  @error('disposition') is-invalid @enderror" type="radio" wire:model.lazy="disposition"
                        id="1" value="1">

@@ -17,6 +17,8 @@
                 @include('inc.q3')
             @elseif($questionCount == 4)
                 @include('inc.q4')
+            @elseif($questionCount == 5)
+                @include('inc.q5')
             @endif
         @else
             <div class="col-md-6 border-left-0 text-primary">
