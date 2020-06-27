@@ -161,10 +161,11 @@ class SystemController extends Controller
             ->where('client', request()->getClientIp())
             ->first();
         if ($user) {
-            $user->update([
+            $user->fill([
                 'email' => isset($email) ? $email : $user->email,
                 'phone_number' => isset($email) ? $email : $user->email
             ]);
+            $user->save();
         } else {
             $query->create([
                 'client' => request()->getClientIp(),
