@@ -163,7 +163,7 @@ class SystemController extends Controller
         if ($user) {
             $user->fill([
                 'email' => isset($email) ? $email : $user->email,
-                'phone_number' => isset($email) ? $email : $user->email
+                'phone_number' => isset($phone_number) ? $phone_number : $user->phone_number
             ]);
             $user->save();
         } else {
