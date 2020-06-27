@@ -13,5 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('sms-callback', 'SMSCallBack@callback')->name('sms.call.back');
 Route::livewire('/', 'crm');
 

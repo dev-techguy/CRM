@@ -12,11 +12,12 @@
         "ext-json": "*",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^1.2",
         "rap2hpoutre/laravel-log-viewer": "^1.6",
+        "shiftechafrica/shift-code-generator": "^1.3",
         "snowfire/beautymail": "^1.1",
         "webpatser/laravel-uuid": "^3.0"
     },

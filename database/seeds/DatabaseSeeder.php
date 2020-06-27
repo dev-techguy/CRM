@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use ShiftechAfrica\CodeGenerator\Seeds\ShiftCodeGeneratorFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,5 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ScriptsTableSeeder::class);
+        $this->call(ShiftCodeGeneratorFactory::class);
+
     }
 }

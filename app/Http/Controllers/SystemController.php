@@ -177,4 +177,15 @@ class SystemController extends Controller
 
         return $user;
     }
+
+    /**
+     * trim phone
+     * number here
+     * @param $phoneNumber
+     * @return null|string|string[]
+     */
+    public static function trimPhoneNumber($phoneNumber)
+    {
+        return preg_replace("/^0/", "254", $phoneNumber);
+    }
 }

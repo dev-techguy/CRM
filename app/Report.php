@@ -15,7 +15,6 @@ class Report extends Model
         'client',
         'answer',
         'disposition',
-        'text',
         'is_complete',
     ];
 
