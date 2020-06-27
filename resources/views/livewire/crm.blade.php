@@ -7,11 +7,11 @@
                 <img src="{{ asset('images/crm.gif') }}" alt="IMG">
             @endif
 
-            <center>
-                <div wire:poll>
-                    <h5>{{ date('F d, Y H:i:s a', strtotime(now())) }}</h5>
-                </div>
-            </center>
+{{--            <center>--}}
+{{--                <div wire:poll>--}}
+{{--                    <h5>{{ date('F d, Y H:i:s a', strtotime(now())) }}</h5>--}}
+{{--                </div>--}}
+{{--            </center>--}}
         </div>
 
         @if($getStarted)
