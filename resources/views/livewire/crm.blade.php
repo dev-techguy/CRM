@@ -53,7 +53,7 @@
                 <hr>
                 <center>
                     <button wire:target="startSession" wire:loading.attr="disabled" wire:click="startSession"
-                            class="btn btn-outline-success btn-lg">
+                            class="btn btn-outline-success">
                         <div wire:loading>
                             <i class="fa fa-spinner fa-spin"></i>
                         </div>
