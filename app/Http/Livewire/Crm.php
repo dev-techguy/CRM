@@ -473,7 +473,7 @@ class Crm extends Component
     public function questionFourteen()
     {
         // set the report
-        SystemController::generateReport($this->script->id);
+        SystemController::generateReport($this->script->id, 'Script completed.');
 
         $this->questionCount = 0;
         $this->getStarted = false;
