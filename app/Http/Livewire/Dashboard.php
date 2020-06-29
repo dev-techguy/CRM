@@ -8,13 +8,6 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public $lava;
-
-    public function mount()
-    {
-
-    }
-
     public function render()
     {
         return view('livewire.dashboard', [
