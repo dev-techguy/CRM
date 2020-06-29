@@ -13,7 +13,13 @@
         <tr>
             <td>{{ $user->phone_number }}</td>
             @foreach(\App\Http\Controllers\SystemController::fetchUserReports($user->client) as $report)
-                <td>{{ $report->answer }}</td>
+                @if(isset($report->answer))
+                    {{ $report->answer }}
+                @elseif(isset($report->disposition))
+                    {{ $report->disposition }}
+                @else
+                    <span class="badge-danger badge"><span class="fa fa-close"></span></span>
+                @endif
             @endforeach
         </tr>
     @endforeach
