@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ReportsExport;
 use App\Report;
 use App\SetDate;
 use App\User;
@@ -10,6 +11,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -188,5 +190,23 @@ class SystemController extends Controller
     public static function trimPhoneNumber($phoneNumber)
     {
         return preg_replace("/^0/", "254", $phoneNumber);
+    }
+
+    public function export()
+    {
+        return Excel::download(new ReportsExport(), 'report.xlsx');
+    }
+
+    /**
+     * fetch user
+     * @param string $ip
+     * @return \Illuminate\Database\Eloquent\Builder|Model|object|null
+     */
+    public static function fetchUserReports(string $ip)
+    {
+        return Report::query()
+            ->oldest()
+            ->where('client', $ip)
+            ->get();
     }
 }

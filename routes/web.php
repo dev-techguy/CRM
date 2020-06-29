@@ -15,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('sms-callback', 'SMSCallBack@callback')->name('sms.call.back');
 Route::livewire('/', 'crm');
+Route::livewire('export', 'export');
+Route::get('export/data', 'SystemController@export')->name('export');
 
