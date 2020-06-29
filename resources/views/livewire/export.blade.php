@@ -28,7 +28,7 @@
                                 @elseif(isset($report->disposition))
                                     {{ $report->disposition }}
                                 @else
-                                   <span class="badge-danger badge"><span class="fa fa-close"></span></span>
+                                    <span class="badge-danger badge"><span class="fa fa-close"></span></span>
                                 @endif
                             </td>
                         @endforeach
