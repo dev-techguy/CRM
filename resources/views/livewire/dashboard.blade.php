@@ -33,7 +33,15 @@
         </div>
     </div>
     <div class="row">
-        <p>&nbsp;</p>
+        <div class="col-md-12">
+            <br>
+            <h5 class="border-dark pull-right">
+                {{ date('F d, Y', strtotime(now())) }}
+            </h5>
+            <br>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="card border-secondary">
                 <div class="card-body">
