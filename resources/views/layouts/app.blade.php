@@ -33,6 +33,8 @@
 
 @if(request()->is('export'))
     <livewire:export>
+        @elseif(request()->is('dashboard'))
+            <livewire:dashboard>
         @else
             <livewire:crm>
         @endif

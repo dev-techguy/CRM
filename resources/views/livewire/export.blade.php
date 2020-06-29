@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="container">
+<div class="container">
+    <div class="row" wire:poll>
         <br>
         <br>
         <br>
@@ -28,13 +28,14 @@
                 </tbody>
             </table>
         </div>
-{{--        <button wire:target="startSession" wire:loading.attr="disabled" wire:click="export"--}}
-{{--                class="btn btn-outline-success float-right">--}}
-{{--            <div wire:loading>--}}
-{{--                <i class="fa fa-spinner fa-spin"></i>--}}
-{{--            </div>--}}
-{{--           EXPORT <span class="fa fa-file-excel-o"></span>--}}
-{{--        </button>--}}
-        <a href="{{ route('export') }}" class="btn btn-outline-success float-right">Export <span class="fa fa-file-excel-o"></span></a>
+        {{--        <button wire:target="startSession" wire:loading.attr="disabled" wire:click="export"--}}
+        {{--                class="btn btn-outline-success float-right">--}}
+        {{--            <div wire:loading>--}}
+        {{--                <i class="fa fa-spinner fa-spin"></i>--}}
+        {{--            </div>--}}
+        {{--           EXPORT <span class="fa fa-file-excel-o"></span>--}}
+        {{--        </button>--}}
+        <a href="{{ route('export') }}" class="btn btn-outline-success float-right">Export <span
+                class="fa fa-file-excel-o"></span></a>
     </div>
 </div>
