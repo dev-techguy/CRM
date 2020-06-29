@@ -23,7 +23,7 @@ class DashBoardChart extends BaseChart
     public function handler(Request $request): Chartisan
     {
         return Chartisan::build()
-            ->labels(['Users','Pending Reports', 'Complete Reports', 'Question Scripts'])
-            ->dataset('Sample', [count(User::query()->whereNotNull('phone_number')->get()), count(User::query()->get()),count(Report::query()->get()),count(Script::query()->get())]);
+            ->labels(['Users', 'Pending Reports', 'Complete Reports', 'Question Scripts'])
+            ->dataset('Sample', [count(User::query()->get()), count(User::query()->whereNull('phone_number')->get()), count(Report::query()->get()), count(Script::query()->get())]);
     }
 }
