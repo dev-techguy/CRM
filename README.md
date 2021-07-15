@@ -1,1 +1,1 @@
-<p align="center"><img src="https://eltrino.com/images/OroCRM_customization.gif.pagespeed.ce.wXSVwqalwT.gif" width="400"></p>
+<p align="center"><img src="https://images.idgesg.net/images/article/2018/03/crm_customer-relationship-management-100752744-large.jpg" width="400"></p>
